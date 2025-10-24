@@ -1,0 +1,77 @@
+.tasks {
+  inline-size: 80%;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: 1rem;
+
+  .task {
+    background: linear-gradient(-45deg, #ffffff, #adecff);
+    box-shadow: 0 0 10px 2px SteelBlue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    inline-size: 80%;
+    padding: 1rem;
+    border-radius: 20px;
+    letter-spacing: 0.3rem;
+    font-size: 1.2rem;
+    position: relative;
+    animation: add 0.3s ease-in-out forwards;
+    transition: 0.3s;
+
+    @keyframes add {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    &__delete {
+      animation: delete 0.3s ease-in-out forwards;
+    }
+
+    @keyframes delete {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+
+    &__button {
+      position: absolute;
+      right: 0;
+      inline-size: 100px;
+      block-size: 100%;
+      background: linear-gradient(135deg, #e55d87 0%, #5fc3e4 100%);
+      color: white;
+      border-radius: 0 17px 17px 0;
+      border: none;
+      cursor: pointer;
+      font: {
+        family: "Lobster", sans-serif;
+        weight: 400;
+        style: normal;
+        size: 1.2rem;
+      }
+      letter-spacing: 0.1rem;
+      transition: 0.2s;
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+
+      &:active {
+        filter: brightness(0.7);
+      }
+    }
+  }
+}
