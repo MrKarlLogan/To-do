@@ -23,7 +23,7 @@ const Form = ({ inputValue, setInputValue, onHandleAddTask }: IFormProps) => {
           name="input"
           className={style.input}
           type="text"
-          placeholder="Add a task"
+          placeholder="Create a task"
           value={inputValue}
           onChange={(event) => {
             if (event.target.value.trim() === "" && event.target.value !== "")

@@ -22,10 +22,15 @@
         size: 1rem;
       }
       letter-spacing: 0.1rem;
+      background-color: LightCyan;
 
       &:focus {
         outline: none;
         box-shadow: 0 0 10px 1px SteelBlue;
+      }
+
+      &::placeholder {
+        color: Plum;
       }
     }
   }
