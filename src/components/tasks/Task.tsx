@@ -38,7 +38,10 @@ const Task = ({ tasks, setTasks, localRef }: ITasks) => {
               }}
               className={style.task}
             >
-              <p>{`Task: ${task.title}`}</p>
+              <div className={style.task__container}>
+                <h3 className={style.task__container_date}>{new Date().toLocaleDateString()}</h3>
+                <p className={style.task__container_title}>{task.title}</p>
+              </div>
               <Button
                 className={style.task__button}
                 type="button"

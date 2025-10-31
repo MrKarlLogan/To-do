@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { FormEvent, KeyboardEvent } from "react";
 import style from "./Form.module.scss";
 import Button from "../button/Button";
 
@@ -6,8 +6,14 @@ interface IFormProps {
   inputValue: string;
   setInputValue: (value: string) => void;
   onHandleAddTask: (event: FormEvent) => void;
+  onHandleKeyDown: (event: KeyboardEvent) => void;
 }
-const Form = ({ inputValue, setInputValue, onHandleAddTask }: IFormProps) => {
+const Form = ({
+  inputValue,
+  setInputValue,
+  onHandleAddTask,
+  onHandleKeyDown,
+}: IFormProps) => {
   return (
     <form name="form" className={style.form}>
       <Button
@@ -30,6 +36,7 @@ const Form = ({ inputValue, setInputValue, onHandleAddTask }: IFormProps) => {
               return;
             setInputValue(event.target.value);
           }}
+          onKeyDown={onHandleKeyDown}
         />
       </label>
     </form>

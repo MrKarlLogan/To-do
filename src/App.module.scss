@@ -1,32 +1,39 @@
 @import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
 
+$radius: 10px;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  inline-size: 100%;
-  block-size: 100dvh;
-  background: linear-gradient(90deg, #cfecd0, #a0cea7, #9ec0db);
+.wrapper {
   font-family: "Lobster", sans-serif;
   font-weight: 400;
   font-style: normal;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  inline-size: 100%;
+  block-size: 100dvh;
+}
+
+.header,
+.main,
+.footer {
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
 }
 
 .header {
-  inline-size: 100%;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
   background: linear-gradient(-90deg, #aea4e3, #d3ffe8);
   box-shadow: 0 0 20px 2px SteelBlue;
 
   &__title {
     background: linear-gradient(-135deg, #e55d87 0%, #5fc3e4 100%);
-    font-size: 3rem;
     background-clip: text;
     color: transparent;
     transition: 0.5s;
@@ -40,23 +47,26 @@ body {
 }
 
 .main {
-  inline-size: 100%;
   block-size: 100%;
-  margin-top: 1rem;
-  display: flex;
+  padding: 2rem;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(90deg, #cfecd0, #a0cea7, #9ec0db);
+  overflow: hidden;
 
   .noTasks {
     font-size: 2rem;
+    color: #e55d87;
+    user-select: none;
   }
 
   .deleteButton {
     inline-size: 30%;
     background: linear-gradient(135deg, #e55d87 0%, #5fc3e4 100%);
     color: white;
-    border-radius: 20px;
+    border-radius: $radius;
+    box-shadow: 0 0 20px 2px SteelBlue;
     border: none;
     cursor: pointer;
     font: {
@@ -75,6 +85,28 @@ body {
 
     &:active {
       filter: brightness(0.7);
+    }
+  }
+}
+
+.footer {
+  justify-content: end;
+  background: linear-gradient(-90deg, #aea4e3, #d3ffe8);
+  box-shadow: 0 0 20px 2px SteelBlue;
+
+  &__title {
+    transition: 0.5s;
+    -webkit-user-select: none;
+    user-select: none;
+    color: white;
+    letter-spacing: 0.2rem;
+    font: {
+      size: 1rem;
+      weight: 400;
+    }
+
+    &:hover {
+      color: #e55d87;
     }
   }
 }

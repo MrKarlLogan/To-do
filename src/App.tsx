@@ -2,25 +2,55 @@ import Form from "./components/form/Form";
 import style from "./App.module.scss";
 import styleTasks from "./components/tasks/Task.module.scss";
 import Task, { type ITask } from "./components/tasks/Task";
-import { useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 import Button from "./components/button/Button";
 import Element from "./components/element/Element";
 
 function App() {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [tasks, setTasks] = useState<ITask[]>(() => {
+    const localTasks = localStorage.getItem("tasks");
+    return JSON.parse(localTasks || "[]");
+  });
   const [inputValue, setInputValue] = useState("");
   const ref = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  useEffect(() => {
+    const handleKeyDeleteDown = (event: WindowEventMap["keydown"]) => {
+      if (event.key === "Delete") {
+        deleteAllTasks();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDeleteDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDeleteDown);
+    };
+  });
 
   const isEditText = (value: string) => {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   };
 
-  const onHandleAddTask = (event: FormEvent) => {
-    event.preventDefault();
+  const addTask = () => {
+    if (inputValue.trim() === "") {
+      alert("Enter the task name");
+      return;
+    }
+
     if (tasks.some((task: ITask) => task.title === inputValue.trim())) {
       alert("A task with this name already exists.");
       return;
     }
+
     setTasks([
       ...tasks,
       { id: crypto?.randomUUID(), title: isEditText(inputValue.trim()) },
@@ -28,7 +58,20 @@ function App() {
     setInputValue("");
   };
 
+  const onHandleAddTask = (event: FormEvent) => {
+    event.preventDefault();
+    addTask();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addTask();
+    }
+  };
+
   const deleteAllTasks = () => {
+    if (tasks.length === 0) return;
     const isConfirmed = confirm("Are you sure you want to delete all tasks?");
     if (isConfirmed) {
       tasks.forEach((task: ITask) => {
@@ -42,7 +85,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className={style.wrapper}>
       <header className={style.header}>
         <Element tag="h1" className={style.header__title}>
           To-do list
@@ -51,6 +94,7 @@ function App() {
           inputValue={inputValue}
           setInputValue={setInputValue}
           onHandleAddTask={onHandleAddTask}
+          onHandleKeyDown={handleKeyDown}
         />
       </header>
       <main className={style.main}>
@@ -69,7 +113,12 @@ function App() {
           </>
         )}
       </main>
-    </>
+      <footer className={style.footer}>
+        <Element tag="h2" className={style.footer__title}>
+          © 2025 Centurion. All rights reserved.
+        </Element>
+      </footer>
+    </div>
   );
 }
 
